@@ -1,0 +1,71 @@
+<!-- Java Script functions are necessary because linking between the tabs of 
+the web app is not supported by R Shiny. -->
+
+<script>
+  var Funk_Fake_Click = function(Arg_Tab_Name, Arg_Element_ID) {
+    var Liste_a_Elemente = document.getElementsByTagName("a");
+    for (var i = 0; i < Liste_a_Elemente.length; i++) {
+      var Link = Liste_a_Elemente[i];
+      if(Link.getAttribute("data-value") == Arg_Tab_Name) {
+        Link.click();
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      };
+    }
+  };
+
+document.addEventListener("DOMContentLoaded", function() {
+  const Liste_Link_IDs = ["Link_zur_Anleitung_1",
+                          "Link_zur_Anleitung_2",
+                          "Link_zur_Anleitung_3",
+                         ];
+
+  Liste_Link_IDs.forEach((x) => {
+    const Link_Element = document.getElementById(x);
+    if (Link_Element) {
+      Link_Element.addEventListener("click", function(event) {
+        event.preventDefault();
+        Funk_Fake_Click("ANLEITUNG", "Anleitung_Paragraph");
+      });
+    }
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  const Liste_Link_IDs = ["Link_zum_Prompt_1",
+                          "Link_zum_Prompt_2",
+                          "Link_zum_Prompt_3",
+                          "Link_zum_Prompt_4",
+                          "Link_zum_Prompt_5"
+                         ];
+
+  Liste_Link_IDs.forEach((x) => {
+    const Link_Element = document.getElementById(x);
+    if (Link_Element) {
+      Link_Element.addEventListener("click", function(event) {
+        event.preventDefault();
+        Funk_Fake_Click("Prompt", "Prompt_Paragraph");
+      });
+    }
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+  const Liste_Link_IDs = ["Link_zu_Hinweisen_1",
+                          "Link_zu_Hinweisen_2",
+                          "Link_zu_Hinweisen_3"
+                         ];
+
+  Liste_Link_IDs.forEach((x) => {
+    const Link_Element = document.getElementById(x);
+    if (Link_Element) {
+      Link_Element.addEventListener("click", function(event) {
+        event.preventDefault();
+        Funk_Fake_Click("Hinweise", "Hinweise_Paragraph");
+      });
+    }
+  });
+});
+</script>

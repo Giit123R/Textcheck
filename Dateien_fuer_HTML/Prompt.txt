@@ -1,0 +1,59 @@
+<section>
+  <p id='Prompt_Paragraph'>
+  Folgender Prompt wird zusammen mit dem eingegeben Text an ChatGPT gesandt. 
+  Der eingegebene Text wird jedoch vorher in Satzblöcke zu je 5 Sätzen 
+  unterteilt. Diese Satzblöcke werden an den Prompt angehangen. Schau 
+  vielleicht auch noch einmal in die 
+  <a href="#" id="Link_zur_Anleitung_3">Anleitung</a>, 
+  um dir den Datenfluss innerhalb der Web App zu vergegenwärtigen. Beachte auch 
+  die 
+  <a href="#" id="Link_zu_Hinweisen_3">Hinweise</a>,
+  um die Ergebnisse besser einordnen zu können.
+  </p>
+</section>
+<section>
+  <h4><b>Prompt:</b>
+  </h4>
+  <p>
+  Du wirst gleich einen Text lesen. Dieser Text ist in Satzblöcke zu je 5 aufeinanderfolgenden Sätzen unterteilt. Vor jedem Block steht deshalb 'Satzblock x:', wobei das x hier exemplarisch für die Position des Satzblocks steht. Beachte aber, dass alle Satzblöcke zusammen einen inhaltlich zusammenhängenden, normalen Text bilden.
+  </p>
+  <p>
+  Du sollst nun folgendes Verfahren für jeden Satzblock anwenden:
+  </p>
+  <p>
+  Fülle für deine Antwort die Variable Blocknummer aus. Sie soll die Position des Satzblocks enthalten.
+  </p>
+  <p>
+  Bewerte nun die folgenden Aspekte:
+  </p>
+  <p>
+  1. Komplexitaet_Sprache: Wie komplex ist der Satzblock auf sprachlicher Ebene? Bewerte mit einer Ganzzahl von 0 bis 10, wobei 10 sehr komplex ist und 0 sehr einfach.
+  </p>
+  <p>
+  2. Komplexitaet_Inhalt: Wie komplex ist der Satzblock auf inhaltlicher Ebene? Bewerte mit einer Ganzzahl von 0 bis 10, wobei 10 sehr komplex ist und 0 sehr einfach.
+  </p>
+  <p>
+  3. Wahrheitsgehalt: Wie sehr entsprechen die präsentierten Meinungen und Fakten im Satzblock der objektiven Wahrheit? Bewerte mit einer Ganzzahl von 0 bis 10, wobei 10 bedeutet, dass alle präsentierten Meinungen und Fakten im Satzblock durch vetrauenswürdige Quellen bestätigt werden können.
+  </p>
+  <p>
+  4. Neutralitaet: Ist der Satzblock von einem neutralen Standpunkt aus geschrieben? Bewerte mit einer Ganzzahl von 0 bis 10, wobei 10 einem neutralen Standpunkt entspricht und 0 einem einseitigem. Bitte beachte bei deiner Bewertung, dass es zu manchen Themen zu einem Standpunkt mehr gültige oder auch stärkere Argumente gibt als zu einem anderen Standpunkt. Kommen aus diesem Grund mehr Argumente oder stärkere Argumente für einen Standpunkt im Satzblock vor, ist dies trotzdem als neutraler Standpunkt zu bewerten.
+  </p>
+  <p>
+  5. Sentiment: Welches Sentiment hat der Satzblock? Bewerte das Sentiment mit einer Ganzzahl von 0 bis 10, wobei 5 neutral ist, 10 positiv und 0 negativ.
+  </p>
+  <p>
+  Wenn eine dieser Fragen von dir nicht zufriedenstellend beantwortet werden kann, antworte bitte trotzdem mit der wahrscheinlichsten Zahl bei Betrachtung des gesamten Textes!
+  </p>
+  <p>
+  Wende dieses Verfahren für jeden Satzblock an.
+  </p>
+  <p>
+  Bitte schaue ganz am Ende, bevor du antwortest, ob du wirklich alle Sätze des Textes bearbeitet hast und schicke dann erst deine Antwort ab.
+  </p>
+  <p>
+  Falls der gesamte Text jedoch weniger als 50 Zeichen lang ist (inklusive Leerzeichen) oder unverständlich ist, bewerte jeden der 5 obigen Aspekte (das heißt Komplexitaet_Sprache, Komplexitaet_Inhalt, Wahrheitsgehalt, Neutralitaet, Sentiment) für jeden Satzblock mit 0. Bewerte in diesem Fall v. a. auch das Sentiment mit 0 und nicht mit 5.
+  </p>
+  <p>
+  Hier folgt nun der Text, mit dem du arbeiten sollst:
+  </p>
+</section>

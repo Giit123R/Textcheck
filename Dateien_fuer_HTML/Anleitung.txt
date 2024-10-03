@@ -1,0 +1,61 @@
+<section>
+  <p id='Anleitung_Paragraph'>
+  Willkommen bei Text Check! Mit dieser Web App kannst du zwei Texte mit der 
+  Hilfe von ChatGPT analysieren und vergleichen. Beispielsweise kannst du 
+  prüfen, ob die präsentierten Fakten in einem Text wahr sind (oder präziser: 
+  ob ChatGPT diese als wahr beurteilt).
+  </p>
+  <p>
+  Gib dazu einen Text in das Eingabetextfeld ein. Drücke dann den darunter 
+  liegenden Button, um den Text Check bzw. die Analyse zu starten. Daraufhin 
+  wirst du ein Diagramm zur Analyse zu sehen bekommen. Die Funktionen beider 
+  Eingabefelder sind identisch, sodass du 2 verschiedene Texte direkt 
+  miteinander vergleichen kannt. Vergleiche z. B. einmal Texte zu demselben 
+  Thema aus unterschiedlichen (Nachrichten-)Medien.
+  </p>
+  <p>
+  Es werden nur Texte mit einer Länge von mindestens 50 Zeichen ausgewertet 
+  (inklusive Leerzeichen). Texte über 10000 Zeichen werden durch die Web App 
+  automatisch  gekürzt. Zudem werden nur verständliche Texte ausgewertet, d. 
+  h. keine zufälligen Buchstabenfolgen. Sollte der Text zu kurz oder 
+  unverständlich sein, werden alle unten beschriebenen Bewertungskriterien 
+  vom Analyseverfahren mit 0 bewertet.
+  </p>
+</section>
+<section>
+  <h4><b>Beschreibung des Analyseverfahrens:</b>
+  </h4>
+  <p>
+  Dein eingegebener Text wird zusammen mit einem 
+  <a href="#" id="Link_zum_Prompt_1">Prompt</a> 
+  an ChatGPT gesandt. Beachte bitte auch die 
+  <a href="#" id="Link_zu_Hinweisen_1">Hinweise</a>.
+  Vor der eigentlichen Analyse wird der Text in Blöcke zu jeweils 5 Sätzen 
+  geteilt. Diese Blöcke werden im Folgenden als Satzblöcke bezeichnet. Beachte 
+  aber, dass v. a. deutsche Sätze mit vielen Punkten, die kein Satzende 
+  darstellen, manchmal fehlerhaft getrennt werden können (z. B. bei "am 1. 
+  Januar"). Wie die Satzblöcke letztlich tatsächlich getrennt wurden, kannst 
+  du unter dem erscheinenden Diagramm nachsehen. 
+  </p>
+  <p>
+  Jeder der Satzblöcke wird von ChatGPT bezüglich folgender Kriterien jeweils 
+  auf einer Skala von 0 bis 10 beurteilt: 
+    <ol>
+      <li>Komplexität Inhalt (0: einfach, 10: komplex)</li>
+      <li>Komplexität Sprache (0: einfach, 10: komplex)</li>
+      <li>Wahrheitsgehalt (0: unwahr, 10: wahr)</li>
+      <li>Neutralität (0: einseitig, 10: neutral)</li>
+      <li>Sentiment (0: negativ, 10: positiv)</li>
+    </ol>
+  Diese Beurteilungen werden dir in einem Diagramm präsentiert. Du kannst auf 
+  die Datenpunkte im Diagramm klicken, um die damit verbundenen Satzblöcke 
+  einzusehen. Alternativ kannst du die Satzblöcke unter dem Diagramm finden. 
+  Durch einen Klick auf die Kriteriennamen in der Diagrammlegende kannst du 
+  einzelne Linien auch aus- und einblenden. Wie genau die Kriterien inhaltlich 
+  zu verstehen sind, liest du am besten im Bereich zum 
+  <a href="#" id="Link_zum_Prompt_2">Prompt</a> 
+  nach. Beachte auch die 
+  <a href="#" id="Link_zu_Hinweisen_2">Hinweise</a>,
+  um die Ergebnisse besser einordnen zu können.
+  </p> 
+</section>
