@@ -2,7 +2,7 @@
 <ul>
   <li>
     <b>Replizierbarkeit von Ergebnissen:</b> Auch wenn du genau denselben Text 
-    noch einmal analysieren lässt, wird die ChatGPT immer zu einem etwas 
+    noch einmal analysieren lässt, wird ChatGPT immer zu einem etwas anderen
     Urteil kommen. Betrachte die Ergebnisse also eher als grobe Tendenz. Schau 
     vielleicht auch noch einmal in die 
     <a href="#" id="Link_zur_Anleitung_1">Anleitung</a>, 
@@ -36,7 +36,7 @@
     <b>Einteilung in Satzblöcke:</b> Die Einteilung in Satzblöcke aus jeweils 
     5 Sätzen wurde vorgenommen, um einen Überblick über den Verlauf des Textes 
     zu ermöglichen, ohne dabei den Text zu sehr auseinanderzureißen. Dabei 
-    kann es jedoch trotzdem manchhmal vorkommen, dass Argumentationsketten 
+    kann es jedoch trotzdem manchmal vorkommen, dass Argumentationsketten 
     getrennt werden und sich auf mehrere Satzblöcke aufteilen. Bedenke, dass 
     dies potenziell die Beurteilung durch ChatGPT beeinflussen kann, v. a. 
     beim Kriterium Neutralität. Schau vielleicht auch noch einmal in die 
@@ -52,7 +52,7 @@
     Auf einen zu spezifischen bzw. einengenden Prompt wurde deshalb 
     verzichtet. Ein weiterer Grund ist, dass längere Prompts mit höheren 
     monetären Kosten verbunden sind. Weiterhin ist die Wahl des Prompts immer 
-    subjektiv. Andere Personen hätten vielleicht einen anderen Prompt als der 
+    subjektiv: Andere Personen hätten vielleicht einen anderen Prompt als der 
     Autor dieser Web App (Text Check) favorisiert und wären so vielleicht zu 
     anderen Ergebnissen gekommen.
   </li>

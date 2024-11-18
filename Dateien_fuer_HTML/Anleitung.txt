@@ -8,10 +8,10 @@
   <p>
   Gib dazu einen Text in das Eingabetextfeld ein. Drücke dann den darunter 
   liegenden Button, um den Text Check bzw. die Analyse zu starten. Daraufhin 
-  wirst du ein Diagramm zur Analyse zu sehen bekommen. Die Funktionen beider 
-  Eingabefelder sind identisch, sodass du 2 verschiedene Texte direkt 
-  miteinander vergleichen kannt. Vergleiche z. B. einmal Texte zu demselben 
-  Thema aus unterschiedlichen (Nachrichten-)Medien.
+  wirst du ein Diagramm zu sehen bekommen, welches du zur Analyse nutzen kannst. 
+  Die Funktionen beider Eingabefelder sind identisch, sodass du 2 verschiedene 
+  Texte direkt miteinander vergleichen kannst. Vergleiche z. B. einmal Texte zu 
+  demselben Thema aus unterschiedlichen (Nachrichten-)Medien.
   </p>
   <p>
   Es werden nur Texte mit einer Länge von mindestens 50 Zeichen ausgewertet 
