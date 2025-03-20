@@ -13,7 +13,7 @@ library("plotly")
 
 
 ###################################################################################################
-# Global constants for settings
+# Global constants for settings.
 
 GLOBAL_TEXT_MIN_ZEICHEN <- 50
 GLOBAL_TEXT_MAX_ZEICHEN <- 10000
@@ -23,34 +23,35 @@ GLOBAL_API_SCHLUESSEL <- ""
 ###################################################################################################
 # Helper functions concerning the UI.
 
-Funk_Card_Style_anpassen <- function(Arg_Cardnummer){
+funk_card_style_anpassen <- function(arg_cardnummer){
   #' Styles the HTML elements of the Shiny Card object with the Card number from argument 
-  #' Arg_Cardnummer.
+  #' arg_cardnummer.
+  
   tags$head(
     tags$style(HTML(paste0("#Header_Eingabe_Text_",
-                           Arg_Cardnummer,
+                           arg_cardnummer,
                            "{font-weight: bold}"
                     )
               )
     ),
-    tags$style(HTML(paste0("#Header_Ausgabe_Text_", Arg_Cardnummer,
+    tags$style(HTML(paste0("#Header_Ausgabe_Text_", arg_cardnummer,
                            "{font-weight: bold; margin-top: 20px}"
                     )
               )
     ),
-    tags$style(HTML(paste0("#Button_", Arg_Cardnummer,
+    tags$style(HTML(paste0("#Button_", arg_cardnummer,
                            "{color: black; background-color:orange; margin-top: 7px}"
                     )
               )
     ),
     tags$style(HTML(paste0("#Card_Plot_",
-                           Arg_Cardnummer,
+                           arg_cardnummer,
                            "{max-height: 533px}"
                     )
               )
     ),
     tags$style(HTML(paste0("#Card_Textuebersicht_",
-                           Arg_Cardnummer,
+                           arg_cardnummer,
                            "{margin-top: 0}"
                     )
               )
@@ -59,20 +60,21 @@ Funk_Card_Style_anpassen <- function(Arg_Cardnummer){
 }
 
 
-Funk_Card_Objekt_erstellen = function(Arg_Cardnummer){
+funk_card_objekt_erstellen = function(arg_cardnummer){
   #' Builds and returns a Shiny Card object.
-  Card_Objekt <- card(
+  
+  card_objekt <- card(
     card_body(
-      h4(id = paste0("Header_Eingabe_Text_", Arg_Cardnummer),
-         span(HTML(paste0("Eingabe Text ", Arg_Cardnummer, ":")))
+      h4(id = paste0("Header_Eingabe_Text_", arg_cardnummer),
+         span(HTML(paste0("Eingabe Text ", arg_cardnummer, ":")))
       ),
-      textAreaInput(inputId = paste0("Eingabe_Text_", Arg_Cardnummer),
+      textAreaInput(inputId = paste0("Eingabe_Text_", arg_cardnummer),
                     label = NULL,
                     value = "",
                     height = "120px",
                     width = "100%",
                     placeholder = paste0("Hier bitte Text ",
-                                        Arg_Cardnummer,
+                                        arg_cardnummer,
                                         " eingeben! (",
                                         GLOBAL_TEXT_MIN_ZEICHEN,
                                         " bis ",
@@ -81,37 +83,37 @@ Funk_Card_Objekt_erstellen = function(Arg_Cardnummer){
                                   ),
                     resize = "vertical"
       ),
-      actionButton(paste0("Button_", Arg_Cardnummer),
-                   paste("!!! Check von Text", Arg_Cardnummer,"starten !!!")
+      actionButton(paste0("Button_", arg_cardnummer),
+                   paste("!!! Check von Text", arg_cardnummer,"starten !!!")
                    ),
-      h4(id = paste0("Header_Ausgabe_Text_", Arg_Cardnummer),
-         span(HTML(paste0("Ausgabe Text ", Arg_Cardnummer, ":")))
+      h4(id = paste0("Header_Ausgabe_Text_", arg_cardnummer),
+         span(HTML(paste0("Ausgabe Text ", arg_cardnummer, ":")))
       ),
       card(
-        id = paste0("Card_Plot_", Arg_Cardnummer),
+        id = paste0("Card_Plot_", arg_cardnummer),
         card_body(
           height = 533,
           max_height = 533,
-          plotlyOutput(outputId = paste0("Ausgabe_Plot_", Arg_Cardnummer))
+          plotlyOutput(outputId = paste0("Ausgabe_Plot_", arg_cardnummer))
         )
       ),
       card(
-        id = paste0("Card_Textuebersicht_", Arg_Cardnummer),
+        id = paste0("Card_Textuebersicht_", arg_cardnummer),
         card_body(
-          htmlOutput(outputId = paste0("Ausgabe_String_Textuebersicht_", Arg_Cardnummer))
+          htmlOutput(outputId = paste0("Ausgabe_String_Textuebersicht_", arg_cardnummer))
         )
       )
     )
   )
   
-  return(Card_Objekt)
+  return(card_objekt)
 }
 
 
 ###################################################################################################
 # Create central Shiny object for the UI.
 
-UI_Objekt <- page_navbar(
+ui_objekt <- page_navbar(
   title = list("Text Check",
                tags$head(
                  tags$link(rel = "icon",
@@ -135,11 +137,11 @@ UI_Objekt <- page_navbar(
               ),
               layout_columns(
                 col_widths = c(6, 6),
-                Card_Objekt_erstellt_1 <- Funk_Card_Objekt_erstellen(Arg_Cardnummer = "1"),
-                Card_Objekt_erstellt_2 <- Funk_Card_Objekt_erstellen(Arg_Cardnummer = "2")
+                Card_Objekt_erstellt_1 <- funk_card_objekt_erstellen(arg_cardnummer = "1"),
+                Card_Objekt_erstellt_2 <- funk_card_objekt_erstellen(arg_cardnummer = "2")
               ),
-              Funk_Card_Style_anpassen(Arg_Cardnummer = "1"),
-              Funk_Card_Style_anpassen(Arg_Cardnummer = "2")
+              funk_card_style_anpassen(arg_cardnummer = "1"),
+              funk_card_style_anpassen(arg_cardnummer = "2")
             )
   ),
   nav_panel(title = "ANLEITUNG",
@@ -158,103 +160,108 @@ UI_Objekt <- page_navbar(
 ###################################################################################################
 # Helper functions concerning the server logic, i. e. the actual computations.
 
-Funk_Liste_Saetze_erstellen <- function(Arg_Eingabe_Text){
-  #' Divides the text from argument Arg_Eingabe_Text into its sentences and returns a list of 
+funk_liste_saetze_erstellen <- function(arg_eingabe_text){
+  #' Divides the text from argument arg_eingabe_text into its sentences and returns a list of 
   #' these sentences. 
-  Eingabe_Text <- trimws(Arg_Eingabe_Text)
-  if (is.na(Eingabe_Text)
-      | is.null(Eingabe_Text)
-      | (nchar(Eingabe_Text) < GLOBAL_TEXT_MIN_ZEICHEN)
+  
+  eingabe_text <- trimws(arg_eingabe_text)
+  if (is.na(eingabe_text)
+      | is.null(eingabe_text)
+      | (nchar(eingabe_text) < GLOBAL_TEXT_MIN_ZEICHEN)
       ){
-    Eingabe_Text <- "Text zu kurz!"  
+    eingabe_text <- "Text zu kurz!"  
   }
   
-  else if (nchar(Eingabe_Text) > GLOBAL_TEXT_MAX_ZEICHEN){
-    Eingabe_Text <- substr(Eingabe_Text, 1, GLOBAL_TEXT_MAX_ZEICHEN)
+  else if (nchar(eingabe_text) > GLOBAL_TEXT_MAX_ZEICHEN){
+    eingabe_text <- substr(eingabe_text, 1, GLOBAL_TEXT_MAX_ZEICHEN)
   }
   
-  Eingabe_Text_Tokens <- tokenize_sentences(Eingabe_Text)
-  Liste_Saetze <- unlist(Eingabe_Text_Tokens)
+  eingabe_text_tokens <- tokenize_sentences(eingabe_text)
+  liste_saetze <- unlist(eingabe_text_tokens)
   
-  return(Liste_Saetze)
+  return(liste_saetze)
 }
 
 
-Funk_Dataframe_Satzbloecke_erstellen <- function(Arg_Liste_Saetze){
+funk_dataframe_satzbloecke_erstellen <- function(arg_liste_saetze){
   #' Creates and returns a dataframe template for the results. This template is populated with one 
-  #' block of 5 sentences per row. Later it will be merged with the results from ChatGPT.
-  # List for blocks of sentences (5 sentences per block)
-  Liste_Satzbloecke <- list()
-  # List for blocks of sentences (5 sentences per block): formatted for hovering in Plotly
-  Liste_Satzbloecke_fuer_hover <- list()
+  #' blocks of 5 sentences per each row of the dataframe. Later it will be merged with the results 
+  #' from ChatGPT.
   
-  # Create a new row for every 5 sentences in the text
-  for (i in seq(1, length(Arg_Liste_Saetze), by = 5)) {
-    Satzblock <- paste(
-      Arg_Liste_Saetze[i:min(i + 4, length(Arg_Liste_Saetze))],
+  # List for blocks of sentences (5 sentences per block)
+  liste_satzbloecke <- list()
+  # List for blocks of sentences (5 sentences per block): formatted for hovering in Plotly
+  liste_satzbloecke_fuer_hover <- list()
+  
+  # Create a new block for every 5 sentences in the text and add it to the lists
+  for (i in seq(1, length(arg_liste_saetze), by = 5)) {
+    satzblock <- paste(
+      arg_liste_saetze[i:min(i + 4, length(arg_liste_saetze))],
       collapse = " "                                                                                      )
     
-    Liste_Satzbloecke[[length(Liste_Satzbloecke) + 1]] <- Satzblock
+    liste_satzbloecke[[length(liste_satzbloecke) + 1]] <- satzblock
     
-    Liste_Zeichen_Satzblock <- unlist(strsplit(Satzblock, split = ""))
-    Satzblock_fuer_hover = ""
+    liste_zeichen_satzblock <- unlist(strsplit(satzblock, split = ""))
+    satzblock_fuer_hover = ""
     
-    Zaehler_Zeichen <- 0
-    Zaehler_Linebreak <- 0
+    zaehler_zeichen <- 0
+    zaehler_linebreak <- 0
     
-    for (Zeichen_x in Liste_Zeichen_Satzblock){
-      Satzblock_fuer_hover <- paste0(Satzblock_fuer_hover, Zeichen_x)
-      Zaehler_Zeichen <- Zaehler_Zeichen + 1
+    for (zeichen_x in liste_zeichen_satzblock){
+      satzblock_fuer_hover <- paste0(satzblock_fuer_hover, zeichen_x)
+      zaehler_zeichen <- zaehler_zeichen + 1
       
-      if (Zaehler_Zeichen %/% 50 > Zaehler_Linebreak){
-        if (Zeichen_x == " "){
-          Zaehler_Linebreak <- Zaehler_Linebreak + 1
-          Satzblock_fuer_hover <- paste0(Satzblock_fuer_hover, "<br>")
+      if (zaehler_zeichen %/% 50 > zaehler_linebreak){
+        if (zeichen_x == " "){
+          zaehler_linebreak <- zaehler_linebreak + 1
+          satzblock_fuer_hover <- paste0(satzblock_fuer_hover, "<br>")
         } 
       }
     }
     
-    Liste_Satzbloecke_fuer_hover[[length(Liste_Satzbloecke_fuer_hover) + 1]] <- 
-      Satzblock_fuer_hover
+    liste_satzbloecke_fuer_hover[[length(liste_satzbloecke_fuer_hover) + 1]] <- 
+      satzblock_fuer_hover
   }
   
   # Create dataframe from populated lists
-  Dataframe_Satzbloecke <- data.frame(
-    Blocknummer = 1:length(Liste_Satzbloecke),
-    Blockinhalt = unlist(Liste_Satzbloecke),
-    Blockinhalt_fuer_hover = unlist(Liste_Satzbloecke_fuer_hover),
+  dataframe_satzbloecke <- data.frame(
+    Blocknummer = 1:length(liste_satzbloecke),
+    Blockinhalt = unlist(liste_satzbloecke),
+    Blockinhalt_fuer_hover = unlist(liste_satzbloecke_fuer_hover),
     stringsAsFactors = FALSE
   )
   
-  return(Dataframe_Satzbloecke)
+  return(dataframe_satzbloecke)
 }
 
 
-Funk_Nachricht_fuer_GPT_erstellen <- function(Arg_Dataframe_Satzbloecke){
+funk_nachricht_fuer_gpt_erstellen <- function(arg_dataframe_satzbloecke){
   #' Creates the message for sending to ChatGPT by concatenating the prompt with the blocks of 
   #' sentences. Returns this message.
-  # Load prompt from txt file
-  Nachricht <- paste(readLines("Prompt.txt"), collapse = "\n")
   
-  for (i in 1:nrow(Arg_Dataframe_Satzbloecke)){
-    Blocknummer <- Arg_Dataframe_Satzbloecke[i, "Blocknummer"]
-    Blocknummer_str <- paste(c("Satzblock", Blocknummer), collapse = " ")
-    Blocknummer_str <- paste(Blocknummer_str, ":", sep = "")
+  # Load prompt from txt file
+  nachricht <- paste(readLines("Prompt.txt"), collapse = "\n")
+  
+  for (i in 1:nrow(arg_dataframe_satzbloecke)){
+    blocknummer <- arg_dataframe_satzbloecke[i, "Blocknummer"]
+    blocknummer_str <- paste(c("Satzblock", blocknummer), collapse = " ")
+    blocknummer_str <- paste(blocknummer_str, ":", sep = "")
     
-    Blockinhalt <- Arg_Dataframe_Satzbloecke[i, "Blockinhalt"]
+    blockinhalt <- arg_dataframe_satzbloecke[i, "Blockinhalt"]
     
-    Nachricht <- paste(Nachricht, Blocknummer_str, sep = "\n")
-    Nachricht <- paste(Nachricht, Blockinhalt, sep = " ")
+    nachricht <- paste(nachricht, blocknummer_str, sep = "\n")
+    nachricht <- paste(nachricht, blockinhalt, sep = " ")
   }
   
-  return(Nachricht)
+  return(nachricht)
 }
 
 
-Funk_Liste_fuer_JSON_erstellen <- function(){
-  #' Returns a list which could be converted to JSON. This JSON be sent to ChatGPT so that it will
-  #' return its output in the required format.
-  Liste_fuer_JSON = list(
+funk_liste_fuer_json_erstellen <- function(){
+  #' Returns a list which could be converted to JSON. This JSON will be sent to ChatGPT so that 
+  #' ChatGPT will return its answer / output in the required format.
+  
+  liste_fuer_json = list(
     type = "json_schema",
     json_schema = list(
       strict = TRUE,
@@ -291,14 +298,15 @@ Funk_Liste_fuer_JSON_erstellen <- function(){
     )
   )
   
-  return(Liste_fuer_JSON)
+  return(liste_fuer_json)
 }
 
 
-Funk_Dataframe_von_GPT_anfordern <- function(Arg_Nachricht_fuer_GPT, Arg_Liste_fuer_JSON){
-  #' Sends the message from argument Arg_Nachricht_fuer_GPT to ChatGPT and returns a dataframe 
+funk_dataframe_von_gpt_anfordern <- function(arg_nachricht_fuer_gpt, arg_liste_fuer_json){
+  #' Sends the message from argument arg_nachricht_fuer_gpt to ChatGPT and returns a dataframe 
   #' which contains the formatted answer.
-  Antwort_von_GPT <- POST(
+  
+  antwort_von_gpt <- POST(
     url = "https://api.openai.com/v1/chat/completions",
     
     add_headers(Authorization = paste("Bearer", GLOBAL_API_SCHLUESSEL)),
@@ -307,22 +315,22 @@ Funk_Dataframe_von_GPT_anfordern <- function(Arg_Nachricht_fuer_GPT, Arg_Liste_f
     body = list(
       model = "",
       messages = list(
-        list(role = "user", content = Arg_Nachricht_fuer_GPT)
+        list(role = "user", content = arg_nachricht_fuer_gpt)
       ),
-      response_format = Arg_Liste_fuer_JSON
+      response_format = arg_liste_fuer_json
     )
   )
   
-  Antwort_Kontent <- content(Antwort_von_GPT)$choices[[1]]$message$content
-  Antwort_Kontent_Dataframe <- fromJSON(Antwort_Kontent)$Satzblock
+  antwort_kontent <- content(antwort_von_gpt)$choices[[1]]$message$content
+  antwort_kontent_dataframe <- fromJSON(antwort_kontent)$Satzblock
 
-  return(Antwort_Kontent_Dataframe)
+  return(antwort_kontent_dataframe)
 }
 
 
-Funk_Plotly_Objekt_erstellen <- function(Arg_Dataframe){
-  # Creates a Plotly object using the data from argument Arg_Dataframe and returns it.
-  Plotly_Objekt <- plot_ly(Arg_Dataframe,
+funk_plotly_objekt_erstellen <- function(arg_dataframe){
+  # Creates a Plotly object using the data from argument arg_dataframe and returns it.
+  plotly_objekt <- plot_ly(arg_dataframe,
                            x = ~Blocknummer,
                            y = ~Komplexitaet_Sprache,
                            name = "Komplexität Sprache",
@@ -330,11 +338,11 @@ Funk_Plotly_Objekt_erstellen <- function(Arg_Dataframe){
                            mode = "lines+markers",
                            marker = list(size = 10),
                            height = 500,
-                           text = Arg_Dataframe$Blockinhalt_fuer_hover,
+                           text = arg_dataframe$Blockinhalt_fuer_hover,
                            hoverinfo = "text"
                     )
   
-  Plotly_Objekt <- Plotly_Objekt %>% layout(legend = list(orientation = "v",
+  plotly_objekt <- plotly_objekt %>% layout(legend = list(orientation = "v",
                                                           xanchor = "left",
                                                           x = -0.1,
                                                           yanchor = "top",
@@ -344,28 +352,28 @@ Funk_Plotly_Objekt_erstellen <- function(Arg_Dataframe){
                                                       )
                                       )
   
-  Liste_fuer_Traces <- list("Komplexitaet_Inhalt" = "Komplexität Inhalt",
+  liste_fuer_traces <- list("Komplexitaet_Inhalt" = "Komplexität Inhalt",
                             "Wahrheitsgehalt" = "Wahrheitsgehalt",
                             "Neutralitaet" = "Neutralität",
                             "Sentiment" = "Sentiment"
                        )
   
-  for (x in names(Liste_fuer_Traces)){
-    Plotly_Objekt <- Plotly_Objekt %>% add_trace(y = Arg_Dataframe[[x]],
-                                                 name = Liste_fuer_Traces[[x]],
+  for (x in names(liste_fuer_traces)){
+    plotly_objekt <- plotly_objekt %>% add_trace(y = arg_dataframe[[x]],
+                                                 name = liste_fuer_traces[[x]],
                                                  mode = "lines+markers"
                                        )
     
   }
 
-  Anzahl_Zeilen_df <- nrow(Arg_Dataframe)
-  Anzahl_fuer_x_Achse <- max(Anzahl_Zeilen_df + 0.5, 10.5)
+  anzahl_zeilen_df <- nrow(arg_dataframe)
+  anzahl_fuer_x_achse <- max(anzahl_zeilen_df + 0.5, 10.5)
   
-  Plotly_Objekt <- Plotly_Objekt %>% layout(
+  plotly_objekt <- plotly_objekt %>% layout(
     margin = list(t = 0, b = 0),
     hoverlabel = list(font = list(size = 9), align = "left"),
     xaxis = list(title = list(text = "Satzblock", standoff = 3),
-                 range = c(0, Anzahl_fuer_x_Achse),
+                 range = c(0, anzahl_fuer_x_achse),
                  dtick = 1,
                  tick0 = 0,
                  fixedrange = TRUE,
@@ -388,81 +396,84 @@ Funk_Plotly_Objekt_erstellen <- function(Arg_Dataframe){
             )
     )
 
-return(Plotly_Objekt)
+return(plotly_objekt)
 }
 
 
-Funk_String_Textuebersicht_erstellen <- function(Arg_Dataframe){
+funk_string_textuebersicht_erstellen <- function(arg_dataframe){
   #' Returns the formatted text as a single string (for presenting it to the user in the UI).
-  String_Textuebersicht <- "<p style='color:red;'>Durch einen Klick auf die Kriteriennamen in der 
+  
+  string_textuebersicht <- "<p style='color:red;'>Durch einen Klick auf die Kriteriennamen in der 
   Legende kannst du einzelne Linien aus- und einblenden! Du kannst außerdem im Diagramm auf die 
   Datenpunkte klicken, um die damit verbundenen Satzblöcke einzusehen. Alternativ findest du sie 
   auch unter diesem Hinweis.</p>"
   
-  for (i in 1:nrow(Arg_Dataframe)){
-    String_Satzblock <- paste0("<b>Satzblock ",
-                               Arg_Dataframe$Blocknummer[i],
+  for (i in 1:nrow(arg_dataframe)){
+    string_satzblock <- paste0("<b>Satzblock ",
+                               arg_dataframe$Blocknummer[i],
                                ": </b>",
-                               Arg_Dataframe$Blockinhalt[i],
+                               arg_dataframe$Blockinhalt[i],
                                "</p>"
     )
-    String_Textuebersicht <- paste0(String_Textuebersicht, String_Satzblock)
+    string_textuebersicht <- paste0(string_textuebersicht, string_satzblock)
   }
   
-  return(String_Textuebersicht)
+  return(string_textuebersicht)
 }
 
 
-Funk_Arbeiten_Buttonpress <- function(Arg_Userinput){
+funk_arbeiten_buttonpress <- function(arg_userinput){
   #' This function uses all the above functions to create a data pipeline after the user pressed 
   #' the button in the UI.
-  Liste_Saetze <- Funk_Liste_Saetze_erstellen(Arg_Eingabe_Text = Arg_Userinput)
   
-  Dataframe_Satzbloecke <- Funk_Dataframe_Satzbloecke_erstellen(Arg_Liste_Saetze = Liste_Saetze)
+  liste_saetze <- funk_liste_saetze_erstellen(arg_eingabe_text = arg_userinput)
+  
+  dataframe_satzbloecke <- funk_dataframe_satzbloecke_erstellen(arg_liste_saetze = liste_saetze)
 
-  Nachricht_fuer_GPT <- Funk_Nachricht_fuer_GPT_erstellen(
-    Arg_Dataframe_Satzbloecke = Dataframe_Satzbloecke
+  nachricht_fuer_gpt <- funk_nachricht_fuer_gpt_erstellen(
+    arg_dataframe_satzbloecke = dataframe_satzbloecke
   )
   
-  Liste_fuer_JSON <- Funk_Liste_fuer_JSON_erstellen()
+  liste_fuer_json <- funk_liste_fuer_json_erstellen()
   
-  Dataframe_von_GPT <- Funk_Dataframe_von_GPT_anfordern(Arg_Nachricht_fuer_GPT = Nachricht_fuer_GPT,
-                                                        Arg_Liste_fuer_JSON = Liste_fuer_JSON
+  dataframe_von_gpt <- funk_dataframe_von_gpt_anfordern(arg_nachricht_fuer_gpt = nachricht_fuer_gpt,
+                                                        arg_liste_fuer_json = liste_fuer_json
                        )
   
-  Dataframe_merged <- merge(Dataframe_Satzbloecke, Dataframe_von_GPT, by = "Blocknummer")
+  dataframe_merged <- merge(dataframe_satzbloecke, dataframe_von_gpt, by = "Blocknummer")
   
-  Plotly_Objekt <- Funk_Plotly_Objekt_erstellen(Arg_Dataframe = Dataframe_merged)
+  plotly_objekt <- funk_plotly_objekt_erstellen(arg_dataframe = dataframe_merged)
   
-  String_Textuebersicht <- Funk_String_Textuebersicht_erstellen(Arg_Dataframe = Dataframe_merged)
+  string_textuebersicht <- funk_string_textuebersicht_erstellen(arg_dataframe = dataframe_merged)
   
   # Final results of the computations
-  Arbeitsergebnisse <- list("Plotly_Objekt" = Plotly_Objekt,
-                            "String_Textuebersicht" = String_Textuebersicht
+  arbeitsergebnisse <- list("Plotly_Objekt" = plotly_objekt,
+                            "String_Textuebersicht" = string_textuebersicht
                             )
   
-  return(Arbeitsergebnisse)
+  return(arbeitsergebnisse)
 }
 
 
 ###################################################################################################
 # Central function for the Shiny server logic, i. e. the actual computations.
 
-Funk_Server_erstellen <- function(input, output){
+funk_server_erstellen <- function(input, output){
+  
   # For Button 1
   observeEvent(input$Button_1, {
     withProgress(message = "Check von Text 1 läuft!", value = 0, {
       incProgress(0.33)
       
-      Arbeitsergebnisse_1 <- Funk_Arbeiten_Buttonpress(Arg_Userinput = input$Eingabe_Text_1)
+      arbeitsergebnisse_1 <- funk_arbeiten_buttonpress(arg_userinput = input$Eingabe_Text_1)
       
       output$Ausgabe_Plot_1 <- 
-        renderPlotly({Arbeitsergebnisse_1$Plotly_Objekt
+        renderPlotly({arbeitsergebnisse_1$Plotly_Objekt
       })
       incProgress(0.66)
       
       output$Ausgabe_String_Textuebersicht_1 <- renderText({
-        Arbeitsergebnisse_1$String_Textuebersicht
+        arbeitsergebnisse_1$String_Textuebersicht
       })
       incProgress(0.99)
     })  
@@ -473,15 +484,15 @@ Funk_Server_erstellen <- function(input, output){
     withProgress(message = "Check von Text 2 läuft!", value = 0, {
       incProgress(0.33)
       
-      Arbeitsergebnisse_2 <- Funk_Arbeiten_Buttonpress(Arg_Userinput = input$Eingabe_Text_2)
+      arbeitsergebnisse_2 <- funk_arbeiten_buttonpress(arg_userinput = input$Eingabe_Text_2)
       
       output$Ausgabe_Plot_2 <- renderPlotly({
-        Arbeitsergebnisse_2$Plotly_Objekt
+        arbeitsergebnisse_2$Plotly_Objekt
       })
       incProgress(0.66)
       
       output$Ausgabe_String_Textuebersicht_2 <- renderText({
-        Arbeitsergebnisse_2$String_Textuebersicht
+        arbeitsergebnisse_2$String_Textuebersicht
       })
       incProgress(0.99)
     })  
@@ -492,4 +503,4 @@ Funk_Server_erstellen <- function(input, output){
 ###################################################################################################
 # Run the application in Shiny. This can also be considered as the main function of the script.
 
-shinyApp(ui = UI_Objekt, server = Funk_Server_erstellen)
+shinyApp(ui = ui_objekt, server = funk_server_erstellen)
